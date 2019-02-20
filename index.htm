@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>jQuery Word Export Plugin Demo</title>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: myFirstFont;
+            src: url(fonts/krdv011.ttf);
+        }
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <br />
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <input type="button" id="btnprev" onclick="prev()" value="Prev" class="btn btn-md btn-success" />
+                <input type="button" id="btnnext" onclick="next()" value="Next" class="btn btn-md btn-success" />
+                <a class="word-export btn btn-md btn-danger" href="javascript:void(0)"> Export as .doc </a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                <img id="imgData" style="width:98%;" />
+            </div>
+            <div class="col-sm-6">
+                <textarea id="page-content" style="font-family: myFirstFont;font-size:20px;" rows="20" cols="58"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="FileSaver.js"></script>
+    <script src="jquery.wordexport.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#imgData').attr('src', 'imageData/img (4).jpg');
+        });
+
+        function getimgnum() {
+            var nar = $('#imgData').attr('src').split('(');
+            var nar1 = (nar[1]).split(')');
+            return nar1[0];
+        }
+
+        function prev() {
+            var imn = getimgnum();
+            if (imn != 1) { $('#imgData').attr('src', 'imageData/img (' + (imn - 1) + ').jpg'); } else { alert('This is First Image.'); }
+        }
+
+        function next() {
+            var imn = getimgnum();
+            if (imn != 100) { $('#imgData').attr('src', 'imageData/img (' + (parseInt(imn) + 1) + ').jpg'); } else { alert('This is Last Image.'); }
+        }
+        jQuery(document).ready(function ($) {
+            $("a.word-export").click(function (event) {
+                $("#page-content").wordExport();
+            });
+        });
+    </script>
+</body>
+
+</html>
